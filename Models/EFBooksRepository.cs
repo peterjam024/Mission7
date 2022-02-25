@@ -12,6 +12,6 @@ namespace Mission7.Models
         {
             context = temp;
         }
-        public IQueryable<Books> Projects => context.Books;
+        public IQueryable<Books> Books => context.Books;
     }
 }
