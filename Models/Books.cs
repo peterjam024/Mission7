@@ -19,7 +19,7 @@ namespace Mission7.Models
         public string Isbn { get; set; }
         public string Classification { get; set; }
         public string Category { get; set; }
-        public long PageCount { get; set; }
+        public int PageCount { get; set; }
         public double Price { get; set; }
     }
 }
