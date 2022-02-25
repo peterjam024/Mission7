@@ -11,20 +11,35 @@ namespace Mission7.Controllers
 {
     public class HomeController : Controller
     {
-        private BookstoreContext BookContext { get; set; }
-
-        public HomeController(BookstoreContext x)
+        private IMission7ProjectRepository repo;
+        public HomeController(IMission7ProjectRepository temp)
         {
-            BookContext = x;
+            repo = temp;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string bookCategory, int pageNum = 1)
         {
+            int pageSize = 10;
 
-            var applications = BookContext.Books.ToList();
+            var x = new ProjectsViewModel
+            {
+                Projects = repo.Books
+                .Where(p => p.Cateogry == bookCategory || bookCategory == null)
+                .OrderBy(p => p.Title)
+                .Skip(pageSize * (pageNum - 1))
+                .Take(pageSize),
 
-            return View(applications);
+                PageInfo = new PageInfo
+                {
+                    TotalNumProjects = (bookCategory == null ? repo.Books.Count() : repo.Books.Where(x => x.Category == bookCategory).Count()),
+                    ProjectsPerPage = pageSize,
+                    CurrentPage = pageNum
+                }
+            };
+
+            return View(x);
+
         }
-
     }
 }
+
