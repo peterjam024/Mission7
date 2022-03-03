@@ -9,17 +9,17 @@ namespace Mission7.Models
     {
         public List<BasketLineItem> Items { get; set; } = new List<BasketLineItem>();
 
-        public void AddItem(Books proj, int qty)
+        public void AddItem(Books book, int qty)
         {
             BasketLineItem line = Items
-                .Where(p => p.Books.BookId == proj.BookId)
+                .Where(p => p.Book.BookId == book.BookId)
                 .FirstOrDefault();
 
             if (line == null)
             {
                 Items.Add(new BasketLineItem
                 {
-                    Book = proj,
+                    Book = book,
                     Quantity = qty
                 });
             }

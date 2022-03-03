@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Mission7.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace Mission7.Components
 {
     public class TypesViewComponent : ViewComponent
     {
-        private IMission7ProjectRepository repo { get; set; }
+        private IBooksRepository repo { get; set; }
 
-        public TypesViewComponent(IMission7ProjectRepository temp)
+        public TypesViewComponent(IBooksRepository temp)
         {
             repo = temp;
         }
@@ -20,7 +21,7 @@ namespace Mission7.Components
             ViewBag.SelectedCategory = RouteData?.Values["bookCategory"];
 
             var Category = repo.Books
-                .Select(x => x.bookCategory)
+                .Select(x => x.Category)
                 .Distinct()
                 .OrderBy(x => x);
 

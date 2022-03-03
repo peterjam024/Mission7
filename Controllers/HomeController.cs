@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Mission7.Models;
+using Mission7.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,8 +12,8 @@ namespace Mission7.Controllers
 {
     public class HomeController : Controller
     {
-        private IMission7ProjectRepository repo;
-        public HomeController(IMission7ProjectRepository temp)
+        private IBooksRepository repo;
+        public HomeController(IBooksRepository temp)
         {
             repo = temp;
         }
@@ -21,10 +22,10 @@ namespace Mission7.Controllers
         {
             int pageSize = 10;
 
-            var x = new ProjectsViewModel
+            var x = new BooksViewModel
             {
-                Projects = repo.Books
-                .Where(p => p.Cateogry == bookCategory || bookCategory == null)
+                 Books = repo.Books
+                .Where(p => p.Category == bookCategory || bookCategory == null)
                 .OrderBy(p => p.Title)
                 .Skip(pageSize * (pageNum - 1))
                 .Take(pageSize),
